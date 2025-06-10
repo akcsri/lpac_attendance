@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>管理者ダッシュボード</title>
+</head>
+<body>
+  <h1>管理者ページ</h1>
+
+  <h2>参加者一覧</h2>
+  <ul>
+    {% for p in participants %}
+      <li>
+        {{ p.user.username }} - {{ p.position }} - {{ p.name }}- {{ p.status }} - {{ p.email }} - {{ p.questions }} 
+      </li>
+    {% endfor %}
+  </ul>
+
+  <h3>出席者の合計人数: {{ present_count }}</h3>
+
+  <a href="{{ url_for('download_csv') }}">
+  <button type="button">参加者一覧をCSV出力</button>
+  </a>
+
+  <a href="{{ url_for('logout') }}">ログアウト</a>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>ユーザーダッシュボード</title>
+</head>
+<body><img alt="Logo" src="{{ url_for('static', filename='logo.png') }}" style="position: absolute; top: 20px; left: 20px;"/>
+<h2 style="margin-top: 100px;">参加者お一人ずつについて下記の事項を入力して追加ボタンをクリックしてください</h2>
+<form method="POST">
+<label style="text-align: left; display: block;">役職 (Title): <input name="position" required="" style="margin-left: 240px;" type="text"/></label><br/>
+<label style="text-align: left; display: block;">氏名 (Name): <input name="name" required="" style="margin-left: 230px;" type="text"/></label><br/>
+<label style="text-align: left; display: block;">メールアドレス (Email Address): <input name="email" required="" style="margin-left: 90px;" type="email"/></label><br/>
+<label style="text-align: left; display: block;">ご質問・ご要望など (Questions or Requests): <textarea name="questions" style="margin-left: 0px;"></textarea></label><br/>
+<label style="text-align: left; display: block;">出欠 (Attendance): 
+            <select name="status" style="margin-left: 20px;">
+<option value="出席">出席 (Present)</option>
+<option value="欠席">欠席 (Absent)</option>
+</select>
+</label><br/>
+<button style="margin-left: 20px;" type="submit">追加 (Add)</button>
+</form>
+<h2>参加者一覧（更新/削除が可能です）</h2>
+<ul>
+  {% for p in participants %}
+    <li>
+      {{ p.position }} - {{ p.name }} - {{ p.email }} - {{ p.questions }}
+      <form action="{{ url_for('update_participant', participant_id=p.id) }}" method="POST" style="display:inline;">
+<select name="status" style="margin-left: 20px;">
+<option value="出席" {% if p.status == "出席" %}selected{% endif %}>出席</option>
+<option value="欠席" {% if p.status == "欠席" %}selected{% endif %}>欠席</option>
+</select>
+<button style="margin-left: 20px;" type="submit">更新 (Update)</button>
+</form>
+<form action="{{ url_for('delete_participant', participant_id=p.id) }}" method="POST" style="display:inline;">
+<button onclick="return confirm('本当に削除しますか？ Are you sure you want to delete it?');" style="margin-left: 20px;" type="submit">削除 (Delete)</button>
+</form>
+</li>
+  {% endfor %}
+</ul>
+<a href="{{ url_for('logout') }}">ログアウト</a>
+</body>
+</html>

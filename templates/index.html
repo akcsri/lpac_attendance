@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ホームページ</title>
+</head>
+<body>
+    <h1>ようこそ、{{ current_user.username }} さん</h1>
+    <p>あなたのロール: {{ current_user.role }}</p>
+    <ul>
+        {% if current_user.role == 'admin' %}
+            <li><a href="{{ url_for('admin_dashboard') }}">管理者ダッシュボード</a></li>
+        {% else %}
+            <li><a href="{{ url_for('user_dashboard') }}">ユーザーダッシュボード</a></li>
+        {% endif %}
+    </ul>
+    <a href="{{ url_for('logout') }}">ログアウト</a>
+</body>
+</html>

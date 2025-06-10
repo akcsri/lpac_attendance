@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>出欠更新</title>
+</head>
+<body>
+    <h1>出欠情報の更新</h1>
+    <form method="POST">
+        <label>出欠:
+            <select name="status" onchange="toggleDetails(this)">
+                <option value="出席" {% if attendance.status == '出席' %}selected{% endif %}>出席</option>
+                <option value="欠席" {% if attendance.status == '欠席' %}selected{% endif %}>欠席</option>
+            </select>
+        </label><br>
+        <div id="details">
+            <label>肩書: <input type="text" name="title" value="{{ attendance.title }}"></label><br>
+            <label>氏名: <input type="text" name="name" value="{{ attendance.name }}"></label><br>
+        </div>
+        <button type="submit">更新</button>
+    </form>
+    <a href="{{ url_for('index') }}">戻る</a>
+
+    <script>
+        function toggleDetails(select) {
+            const details = document.getElementById('details');
+            details.style.display = select.value === '出席' ? 'block' : 'none';
+        }
+        window.onload = () => {
+            toggleDetails(document.querySelector('select[name=\"status\"]'));
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FY2025 LPAC Attendance</title>
+</head>
+<body><img alt="Logo" src="{{ url_for('static', filename='logo.png') }}" style="position: absolute; top: 20px; left: 20px;"/>
+    <h1 style="margin-top: 100px;">FY2025 AGM Attendance</h1>
+    <form method="POST" action="/login">
+        <label>ユーザー名 (Username): <input type="text" name="username" required></label><br>
+        <label>パスワード (Password): <input type="password" name="password" required></label><br>
+        <button type="submit">ログイン (Login)</button>
+    </form>
+</body>
+</html>
