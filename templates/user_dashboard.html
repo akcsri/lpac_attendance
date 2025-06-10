@@ -6,6 +6,7 @@
 </head>
 <body><img alt="Logo" src="{{ url_for('static', filename='logo.png') }}" style="position: absolute; top: 20px; left: 20px;"/>
 <h2 style="margin-top: 100px;">参加者お一人ずつについて下記の事項を入力して追加ボタンをクリックしてください</h2>
+<h2 style="margin-top: 0px;">Please input the following information for each participant individually, then click the "Add" button.</h2>
 <form method="POST">
 <label style="text-align: left; display: block;">役職 (Title): <input name="position" required="" style="margin-left: 240px;" type="text"/></label><br/>
 <label style="text-align: left; display: block;">氏名 (Name): <input name="name" required="" style="margin-left: 230px;" type="text"/></label><br/>
@@ -20,6 +21,7 @@
 <button style="margin-left: 20px;" type="submit">追加 (Add)</button>
 </form>
 <h2>参加者一覧（更新/削除が可能です）</h2>
+<h2>Participant list (Update/Delete available) </h2>
 <ul>
   {% for p in participants %}
     <li>
@@ -37,6 +39,6 @@
 </li>
   {% endfor %}
 </ul>
-<a href="{{ url_for('logout') }}">ログアウト</a>
+<a href="{{ url_for('logout') }}">ログアウト（Logout）</a>
 </body>
 </html>
