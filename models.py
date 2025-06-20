@@ -23,4 +23,4 @@ class Participant(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # 所有者ユーザー
 
 def get_user_by_username(username):
-    return User.query.filter_by(username=username).first()
+    return User.query.filter_by(username=username).first()

@@ -24,8 +24,6 @@ def load_user(user_id):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form.get('email')
-        questions = request.form.get('questions')
         username = request.form['username']
         password = request.form['password']
         user = get_user_by_username(username)
