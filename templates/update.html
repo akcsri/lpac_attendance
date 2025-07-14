@@ -25,7 +25,7 @@
     <script>
         function toggleDetails(select) {
             const details = document.getElementById('details');
-            details.style.display = select.value === '出席（対面）' ? 'block' : 'none';
+            details.style.display = select.value === '出席（オンライン）' ? 'block' : 'none';
         }
         window.onload = () => {
             toggleDetails(document.querySelector('select[name=\"status\"]'));
