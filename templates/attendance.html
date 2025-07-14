@@ -13,6 +13,7 @@
             <select name="status">
                 <option value="出席（対面）">出席（対面）</option>
                 <option value="出席（オンライン）">出席（オンライン）</option>
+                <option value="欠席">欠席</option>
             </select>
         </label><br>
         <button type="submit">登録 / 更新</button>
@@ -27,6 +28,7 @@
         <select name="status">
           <option value="出席（対面）" {% if p.status == '出席（対面）' %}selected{% endif %}>出席（対面）</option>
           <option value="出席（オンライン）" {% if p.status == '出席（オンライン）' %}selected{% endif %}>出席（オンライン）</option>
+          <option value="欠席" {% if p.status == '欠席' %}selected{% endif %}>欠席</option>
         </select>
         <button type="submit">更新</button>
       </form>
