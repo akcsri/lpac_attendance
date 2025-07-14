@@ -9,7 +9,8 @@
     <form method="POST">
         <label>出欠:
             <select name="status" onchange="toggleDetails(this)">
-                <option value="出席" {% if attendance.status == '出席' %}selected{% endif %}>出席</option>
+                <option value="出席（対面）" {% if attendance.status == '出席（対面）' %}selected{% endif %}>出席（対面）</option>
+                <option value="出席（オンライン）" {% if attendance.status == '出席（オンライン）' %}selected{% endif %}>出席（オンライン）</option>
                 <option value="欠席" {% if attendance.status == '欠席' %}selected{% endif %}>欠席</option>
             </select>
         </label><br>
@@ -24,7 +25,7 @@
     <script>
         function toggleDetails(select) {
             const details = document.getElementById('details');
-            details.style.display = select.value === '出席' ? 'block' : 'none';
+            details.style.display = select.value === '出席（対面）' ? 'block' : 'none';
         }
         window.onload = () => {
             toggleDetails(document.querySelector('select[name=\"status\"]'));
