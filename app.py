@@ -104,7 +104,7 @@ def admin_dashboard():
         return redirect(url_for('index'))
 
     participants = Participant.query.all()
-    present_count = Participant.query.filter_by(status='出席').count()  # ✅ 出席者数をカウント
+    present_count = Participant.query.filter_by(status='出席（対面）').count()  # ✅ 出席者数をカウント
     return render_template('admin_dashboard.html', participants=participants, present_count=present_count)
 
 # アプリ起動時にDB作成（ローカル開発用）
