@@ -14,7 +14,8 @@
 <label style="text-align: left; display: block;">ご質問・ご要望など (Questions or Requests): <textarea name="questions" style="margin-left: 0px;"></textarea></label><br/>
 <label style="text-align: left; display: block;">出欠 (Attendance): 
             <select name="status" style="margin-left: 20px;">
-<option value="出席">出席 (Present)</option>
+<option value="出席（対面）">出席（対面） (Present)</option>
+<option value="出席（オンライン）">出席（オンライン） (Present)</option>                        
 <option value="欠席">欠席 (Absent)</option>
 </select>
 </label><br/>
@@ -28,7 +29,8 @@
       {{ p.position }} - {{ p.name }} - {{ p.email }} - {{ p.questions }}
       <form action="{{ url_for('update_participant', participant_id=p.id) }}" method="POST" style="display:inline;">
 <select name="status" style="margin-left: 20px;">
-<option value="出席" {% if p.status == "出席" %}selected{% endif %}>出席</option>
+<option value="出席（対面）" {% if p.status == "出席（対面）" %}selected{% endif %}>出席（対面）</option>
+<option value="出席（オンライン）" {% if p.status == "出席（オンライン）" %}selected{% endif %}>出席（オンライン）</option>            
 <option value="欠席" {% if p.status == "欠席" %}selected{% endif %}>欠席</option>
 </select>
 <button style="margin-left: 20px;" type="submit">更新 (Update)</button>
