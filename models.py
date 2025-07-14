@@ -24,8 +24,7 @@ class Participant(db.Model):
     email = db.Column(db.String(150), nullable=False)
     position = db.Column(db.String(150), nullable=False)
     questions = db.Column(db.Text, nullable=True)
-    agm_status = db.Column(db.String(50), nullable=True)
-    lpac_status = db.Column(db.String(50), nullable=True)
+    status = db.Column(db.String(100))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 def get_user_by_username(username):
