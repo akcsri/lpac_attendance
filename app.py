@@ -16,6 +16,18 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'your_secret_key')
 DATABASE_URL = os.environ.get('DATABASE_URL')
 if DATABASE_URL and DATABASE_URL.startswith('postgres://'):
     DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://')
+
+# DATABASE_URLの検証
+if DATABASE_URL:
+    print(f"📊 DATABASE_URL detected: {DATABASE_URL[:20]}...")
+    if 'dpg-' in DATABASE_URL:
+        print("✓ Render PostgreSQL detected")
+        print("⚠️ IMPORTANT: Make sure you're using the INTERNAL Database URL")
+        print("   (Not the External Database URL)")
+else:
+    print("⚠️ DATABASE_URL not set - using SQLite")
+    print("⚠️ Data will NOT persist on Render with SQLite!")
+    
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL or 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -34,8 +46,17 @@ mail = Mail(app)
 
 # アプリケーション起動時にテーブルを作成（既存のテーブル・データは保持される）
 with app.app_context():
-    db.create_all()
-    print("✅ Database tables created/verified successfully.")
+    try:
+        db.create_all()
+        print("✅ Database tables created/verified successfully.")
+        if DATABASE_URL:
+            print(f"✅ Using PostgreSQL database")
+        else:
+            print("⚠️ Using SQLite database (data will not persist on Render)")
+    except Exception as e:
+        print(f"⚠️ Database initialization warning: {e}")
+        print("⚠️ App will continue but database operations may fail")
+        print("⚠️ Please check your DATABASE_URL environment variable")
 
 login_manager = LoginManager()
 login_manager.init_app(app)
