@@ -336,14 +336,20 @@ def import_csv():
             db.session.commit()
             
             # インポート通知メール
+            error_details = ""
+            if errors:
+                error_details = "エラー詳細:\\n" + "\\n".join(errors)
+            else:
+                error_details = "全て正常にインポートされました"
+            
             send_notification_email(
                 subject="CSVインポート実行",
-                body=f"操作: CSVインポート\n"
-                     f"実行ユーザー: {current_user.username}\n"
-                     f"時刻: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
-                     f"インポート成功: {imported_count}件\n"
-                     f"エラー: {len(errors)}件\n\n"
-                     f"{'エラー詳細:\n' + chr(10).join(errors) if errors else '全て正常にインポートされました'}"
+                body=f"操作: CSVインポート\\n"
+                     f"実行ユーザー: {current_user.username}\\n"
+                     f"時刻: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\\n\\n"
+                     f"インポート成功: {imported_count}件\\n"
+                     f"エラー: {len(errors)}件\\n\\n"
+                     f"{error_details}"
             )
             
             if imported_count > 0:
@@ -420,10 +426,10 @@ def import_users():
             # ユーザーインポート通知メール
             send_notification_email(
                 subject="ユーザーCSVインポート実行",
-                body=f"操作: ユーザーインポート\n"
-                     f"実行ユーザー: {current_user.username}\n"
-                     f"時刻: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
-                     f"インポート成功: {imported_count}件\n"
+                body=f"操作: ユーザーインポート\\n"
+                     f"実行ユーザー: {current_user.username}\\n"
+                     f"時刻: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\\n\\n"
+                     f"インポート成功: {imported_count}件\\n"
                      f"エラー: {len(errors)}件"
             )
             
