@@ -1,15 +1,110 @@
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>FY2025 LPAC Attendance</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 2em;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 500px;
+            margin: 100px auto 0;
+            background-color: white;
+            padding: 2em;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        .flash-messages {
+            margin-bottom: 1em;
+        }
+        .flash {
+            padding: 1em;
+            margin-bottom: 1em;
+            border-radius: 4px;
+        }
+        .flash.error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .flash.success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .flash.info {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        form {
+            margin-top: 1em;
+        }
+        label {
+            display: block;
+            margin: 1em 0 0.5em;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.5em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 0.7em 2em;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1em;
+            font-size: 1em;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
-<body><img alt="Logo" src="{{ url_for('static', filename='logo.png') }}" style="position: absolute; top: 20px; left: 20px;"/>
-    <h1 style="margin-top: 100px;">FY2025 LPAC Attendance</h1>
-    <form method="POST" action="/login">
-        <label>ユーザー名 (Username): <input type="text" name="username" required></label><br>
-        <label>パスワード (Password): <input type="password" name="password" required></label><br>
-        <button type="submit">ログイン (Login)</button>
-    </form>
+<body>
+    <img alt="Logo" src="{{ url_for('static', filename='logo.png') }}" class="logo"/>
+    
+    <div class="container">
+        <h1>FY2025 LPAC Attendance</h1>
+        
+        <!-- Flashメッセージ表示 -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category if category else 'info' }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <form method="POST" action="/login">
+            <label>ユーザー名 (Username):
+                <input type="text" name="username" required autofocus>
+            </label>
+            
+            <label>パスワード (Password):
+                <input type="password" name="password" required>
+            </label>
+            
+            <button type="submit">ログイン (Login)</button>
+        </form>
+    </div>
 </body>
 </html>
