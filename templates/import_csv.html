@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>参加者CSVインポート</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 2em;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 2em;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .flash {
+            padding: 1em;
+            margin: 1em 0;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 4px;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        .info-box {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            padding: 1em;
+            margin: 1em 0;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 0.5em 1em;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .sample-format {
+            background-color: #f8f9fa;
+            padding: 1em;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📥 参加者CSVインポート</h1>
+        
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <div class="info-box">
+            <h3>📋 CSVフォーマット</h3>
+            <p>以下の形式でCSVファイルを作成してください（1行目はヘッダー）：</p>
+            <div class="sample-format">ユーザー名,役職,名前,メール,質問,ステータス
+user1,部長,山田太郎,yamada@example.com,特になし,出席（対面）
+user2,課長,佐藤花子,sato@example.com,駐車場について,出席（オンライン）</div>
+            
+            <h4>📌 注意事項：</h4>
+            <ul>
+                <li>ユーザー名、役職、名前、メール、ステータスは必須項目です</li>
+                <li>ユーザー名は既に登録されているユーザーである必要があります</li>
+                <li>ステータスは「出席（対面）」「出席（オンライン）」「欠席」のいずれかです</li>
+                <li>同じ名前の参加者が存在する場合は更新されます</li>
+                <li>UTF-8（BOM付き）で保存してください</li>
+            </ul>
+        </div>
+        
+        <form method="POST" enctype="multipart/form-data">
+            <h3>CSVファイルを選択</h3>
+            <input type="file" name="csv_file" accept=".csv" required>
+            <br><br>
+            <button type="submit">📤 インポート実行</button>
+        </form>
+        
+        <br>
+        <a href="{{ url_for('admin_dashboard') }}">← 管理者ダッシュボードに戻る</a>
+    </div>
+</body>
+</html>

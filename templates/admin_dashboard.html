@@ -2,25 +2,114 @@
 <html>
 <head>
   <title>管理者ダッシュボード</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 2em;
+      background-color: #f9f9f9;
+    }
+    .header-section {
+      background-color: white;
+      padding: 1.5em;
+      margin-bottom: 1em;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .action-buttons {
+      margin: 1em 0;
+    }
+    .action-buttons button, .action-buttons a {
+      background-color: #007bff;
+      color: white;
+      padding: 0.5em 1em;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-right: 0.5em;
+      margin-bottom: 0.5em;
+    }
+    .action-buttons button:hover, .action-buttons a:hover {
+      background-color: #0056b3;
+    }
+    .import-button {
+      background-color: #28a745 !important;
+    }
+    .import-button:hover {
+      background-color: #218838 !important;
+    }
+    .participant-list {
+      background-color: white;
+      padding: 1.5em;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .stats {
+      background-color: #d4edda;
+      padding: 1em;
+      border-radius: 4px;
+      margin: 1em 0;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      padding: 0.5em;
+      border-bottom: 1px solid #eee;
+    }
+    li:hover {
+      background-color: #f8f9fa;
+    }
+  </style>
 </head>
 <body>
-  <h1>管理者ページ</h1>
+  <div class="header-section">
+    <h1>📊 管理者ページ</h1>
+    
+    <div class="stats">
+      <h3>📈 統計情報</h3>
+      <p><strong>出席者（対面）の合計人数: {{ present_count }}</strong></p>
+      <p>全参加者数: {{ participants|length }}</p>
+    </div>
 
-  <h2>参加者一覧</h2>
-  <ul>
-    {% for p in participants %}
-      <li>
-        {{ p.user.username }} - {{ p.position }} - {{ p.name }}- {{ p.status }} - {{ p.email }} - {{ p.questions }} 
-      </li>
-    {% endfor %}
-  </ul>
+    <div class="action-buttons">
+      <h3>🔧 管理機能</h3>
+      <a href="{{ url_for('download_csv') }}">
+        <button type="button">📥 参加者一覧をCSV出力</button>
+      </a>
+      <a href="{{ url_for('import_csv') }}" class="import-button">
+        📤 参加者CSVインポート
+      </a>
+      <a href="{{ url_for('import_users') }}" class="import-button">
+        👥 ユーザーCSVインポート
+      </a>
+    </div>
+  </div>
 
-  <h3>出席者（対面）の合計人数: {{ present_count }}</h3>
+  <div class="participant-list">
+    <h2>👤 参加者一覧</h2>
+    {% if participants %}
+      <ul>
+        {% for p in participants %}
+          <li>
+            <strong>{{ p.user.username }}</strong> - 
+            {{ p.position }} - 
+            {{ p.name }} - 
+            {{ p.status }} - 
+            {{ p.email }} - 
+            {{ p.questions or '（質問なし）' }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>参加者はまだ登録されていません。</p>
+    {% endif %}
+  </div>
 
-  <a href="{{ url_for('download_csv') }}">
-  <button type="button">参加者一覧をCSV出力</button>
-  </a>
-
-  <a href="{{ url_for('logout') }}">ログアウト</a>
+  <div style="margin-top: 2em;">
+    <a href="{{ url_for('logout') }}">ログアウト</a>
+  </div>
 </body>
 </html>

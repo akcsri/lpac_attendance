@@ -1,0 +1,4 @@
+ユーザー名,役職,名前,メール,質問,ステータス
+user1,部長,山田太郎,yamada@example.com,特になし,出席（対面）
+user2,課長,佐藤花子,sato@example.com,駐車場について,出席（オンライン）
+user3,係長,鈴木一郎,suzuki@example.com,,欠席

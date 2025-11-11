@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ユーザーCSVインポート</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 2em;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 2em;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .flash {
+            padding: 1em;
+            margin: 1em 0;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 4px;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        .info-box {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            padding: 1em;
+            margin: 1em 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 1em;
+            margin: 1em 0;
+            border-radius: 4px;
+            color: #856404;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 0.5em 1em;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .sample-format {
+            background-color: #f8f9fa;
+            padding: 1em;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>👥 ユーザーCSVインポート</h1>
+        
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <div class="warning-box">
+            <h3>⚠️ セキュリティに関する注意</h3>
+            <p><strong>このCSVファイルにはパスワードが平文で記載されています。</strong></p>
+            <ul>
+                <li>ファイルは安全に管理してください</li>
+                <li>インポート後は必ずファイルを削除してください</li>
+                <li>ユーザーには初回ログイン後にパスワード変更を促してください</li>
+            </ul>
+        </div>
+        
+        <div class="info-box">
+            <h3>📋 CSVフォーマット</h3>
+            <p>以下の形式でCSVファイルを作成してください（1行目はヘッダー）：</p>
+            <div class="sample-format">ユーザー名,パスワード,ロール
+yamada,Password123,user
+tanaka,SecurePass456,user
+admin2,AdminPass789,admin</div>
+            
+            <h4>📌 注意事項：</h4>
+            <ul>
+                <li>ユーザー名とパスワードは必須項目です</li>
+                <li>ロールは「user」または「admin」です（省略時は「user」）</li>
+                <li>既に存在するユーザー名はスキップされます</li>
+                <li>UTF-8（BOM付き）で保存してください</li>
+            </ul>
+        </div>
+        
+        <form method="POST" enctype="multipart/form-data">
+            <h3>CSVファイルを選択</h3>
+            <input type="file" name="csv_file" accept=".csv" required>
+            <br><br>
+            <button type="submit">📤 インポート実行</button>
+        </form>
+        
+        <br>
+        <a href="{{ url_for('admin_dashboard') }}">← 管理者ダッシュボードに戻る</a>
+    </div>
+</body>
+</html>
